@@ -76,4 +76,3 @@ u.stream_resource(planner,'test.bin',source,entry,{'md5':hashlib.md5(source.read
 assert (profiles/'CN/test.bin').read_bytes()==target
 print('Interrupted stream remains unpublished and retries safely PASS',flush=True)
 (ROOT/'.tmp/streaming-tests.json').write_text(json.dumps({'result':'PASS','cases':12,'root':str(root)}),encoding='utf-8')
-

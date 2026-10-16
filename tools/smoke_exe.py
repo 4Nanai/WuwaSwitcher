@@ -16,3 +16,14 @@ subprocess.run([str(ROOT/'dist/WuwaSwitcher.exe'),'--self-check',str(report)],en
 result=json.loads(report.read_text(encoding='utf-8'))
 assert result['result']=='PASS' and result['files']==4,result
 print('Packaged EXE synthetic bundle self-check PASS')
+
+# Ensure the native decoder and its dependencies were bundled, too.
+import pyxdelta
+source=backend.roots['GLOBAL']/'Client/Content/Paks/delta.pak'
+target=backend.roots['CN']/'Client/Content/Paks/delta.pak'
+patch=ROOT/'.tmp/packaged-native.vcdiff'
+decoded=ROOT/'.tmp/packaged-native.bin'
+assert pyxdelta.run(str(source),str(target),str(patch))
+subprocess.run([str(ROOT/'dist/WuwaSwitcher.exe'),'--decode',str(source),str(patch),str(decoded)],check=True,timeout=90)
+assert decoded.read_bytes()==target.read_bytes()
+print('Packaged EXE native decoder PASS')

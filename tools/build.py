@@ -27,7 +27,7 @@ def main():
             if path.is_file():z.write(path,path.relative_to(package))
     checksum=ROOT/'dist/SHA256SUMS.txt'
     checksum.write_text(''.join(f'{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}\n'
-                              for p in [archive,ROOT/'dist/WuwaSwitcher.exe']),encoding='utf-8')
+                              for p in [archive,ROOT/'dist/WuwaSwitcher.exe']),encoding='utf-8',newline='\n')
     print(archive)
 
 
